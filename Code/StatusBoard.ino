@@ -30,8 +30,6 @@ MS5837 depth_sensor;
 const int VOLTAGE_READOUT_DIO = 10;
 const int VOLTAGE_READOUT_CLK = 11;
 const int VOLTAGE_READOUT_SAMPLE_SIZE = 20;
-const int VOLTAGE_READOUT_SAMPLE_DELAY = 2; // As multiple of measurement delay
-const int VOLTAGE_SAMPLE_COUNT_THRESHOLD = VOLTAGE_READOUT_SAMPLE_SIZE * VOLTAGE_READOUT_SAMPLE_DELAY;
 TM1637Display voltageReadout(CLK, DIO);
 
 /* Voltage Divider */
@@ -71,16 +69,14 @@ long getDepth() {
 /* Returns the measured voltage value between the probes */
 double getVoltageReading() {
   double voltageDividerOutput = analogReadMilliVolts(VOLTAGE_DIVIDER_OUTPUT) / 1000.0;
-  return voltageDividerOutput * 5.545454; // Will need to be calibrated
+  return voltageDividerOutput * 5.5814; // Will need to be calibrated (theoretical: 5.5454545)
 }
 
 /* Updates and displays average voltage after enough samples have been collected */
 void updateVoltage() {
   voltageSampleCount++;
-  // Sample in accordance with the voltage sample rate instead of the default sensor measurement rate
-  if (voltageSampleCount % VOLTAGE_READOUT_SAMPLE_DELAY == 0) voltageSum += getVoltageReading();
-  if (voltageSampleCount != VOLTAGE_SAMPLE_COUNT_THRESHOLD) return;
-  // TODO: Ask if the exact sample rate matters this much
+  voltageSum += getVoltageReading();
+  if (voltageSampleCount != VOLTAGE_READOUT_SAMPLE_SIZE) return;
 
   // Reset sampling and display
   averageVoltage = voltageSum / VOLTAGE_READOUT_SAMPLE_SIZE;
