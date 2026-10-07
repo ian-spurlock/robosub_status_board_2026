@@ -93,22 +93,19 @@ void depthSensorInit() {
 long getDepth() {
   depth_sensor.read();
   float rawDepth = depth_sensor.depth();
+  long depth;
 
   //Recasting data to a long because floats can't be bit shifted
-  float *f_ptr = &rawDepth;
-  return *reinterpret_cast<long*>(f_ptr);
+  std::memcpy(&depth, &rawDepth, sizeof(rawDepth));
+
+  return depth;
 }
 
 //////////////////////// VOLTAGE READOUT ////////////////////////
 
-/* Returns the measured voltage value between the probes */
-double getVoltageReading() {
-  return analogReadMilliVolts(VOLTAGE_DIVIDER_INPUT) * 5.5814; // Will need to be calibrated (theoretical: 5.5454545)
-}
-
 /* Updates and displays average voltage after enough samples have been collected */
 void updateVoltage() {
-  voltageSum += getVoltageReading();
+  voltageSum += analogReadMilliVolts(VOLTAGE_DIVIDER_INPUT) * 5.5814; // Will need to be calibrated (theoretical: 5.5454545)
   voltageSampleCount++;
   if (voltageSampleCount != VOLTAGE_READOUT_SAMPLE_SIZE) return;
 
@@ -122,15 +119,8 @@ void updateVoltage() {
 
 void updateStatusLEDs() {
   char status = inputFromSerial();
-  setStatus(
-    status == 's' || status == 'e', // Stopped if sensor-resetting or e-stopped.
-    status == 's' || status == 'r'  // Enabled if sensor-resetting or running.
-  );
-}
-
-void setStatus(bool isStopped, bool isEnabled) {
-  digitalWrite(STOPPED_LED, isStopped ? HIGH : LOW);
-  digitalWrite(ENABLED_LED, isEnabled ? HIGH : LOW);
+  digitalWrite(STOPPED_LED, status == 's' || status == 'e'); // Stopped if sensor-resetting or e-stopped.
+  digitalWrite(ENABLED_LED, status == 's' || status == 'r'); // Enabled if sensor-resetting or running.
 }
 
 //////////////////////// SERIAL COMMUNICATION ////////////////////////
