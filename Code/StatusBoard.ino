@@ -2,7 +2,6 @@
 // Michigan Robotic Submarine - Fall 2026
 
 #include <Wire.h>
-#include <cstddef>
 #include "MS5837.h"
 #include "TM1637Display.h"
 
@@ -13,7 +12,7 @@ constexpr unsigned long MEASUREMENT_DELAY_MS = 50;
 const int BAUD_RATE = 9600;
 
 /* Fluid Density */
-const int DENSITY_FRESHWATER_KG_M3  = 997;
+const int DENSITY_FRESHWATER_KG_M3 = 997;
 
 /* Hall Effect Digital Pins */
 const int HALL_EFFECT_CHARM   = 2;
@@ -35,7 +34,7 @@ const int ENABLED_LED = 44;
 const int VOLTAGE_READOUT_DIO = 10;
 const int VOLTAGE_READOUT_CLK = 11;
 const int VOLTAGE_READOUT_SAMPLE_SIZE = 20;
-TM1637Display voltageReadout(CLK, DIO);
+TM1637Display voltageReadout(VOLTAGE_READOUT_CLK, VOLTAGE_READOUT_DIO);
 
 /* Voltage Divider */
 const int VOLTAGE_DIVIDER_INPUT = 4;
@@ -44,6 +43,38 @@ const int VOLTAGE_DIVIDER_INPUT = 4;
 double averageVoltage = 0.0;
 double voltageSum = 0.0;
 int voltageSampleCount = 0;
+
+//////////////////////// CORE FUNCTIONALITY ////////////////////////
+
+void setup() {
+  Serial.begin(BAUD_RATE);
+
+  pinMode(HALL_EFFECT_CHARM,   INPUT_PULLUP);
+  pinMode(HALL_EFFECT_STRANGE, INPUT_PULLUP);
+
+  voltageReadout.setBrightness(7);
+  voltageReadout.clear();
+
+  pinMode(STOPPED_LED, OUTPUT);
+  pinMode(ENABLED_LED, OUTPUT);
+
+  depthSensorInit();
+}
+
+void loop() {
+  updateVoltage();
+
+  if (serialInputAvailable()) updateStatusLEDs();
+
+  outputToSerial(
+    digitalRead(HALL_EFFECT_CHARM),
+    digitalRead(HALL_EFFECT_STRANGE),
+    getDepth(),
+    averageVoltage
+  );
+
+  delay(MEASUREMENT_DELAY_MS);
+}
 
 //////////////////////// DEPTH SENSOR ////////////////////////
 
@@ -130,36 +161,4 @@ void outputToSerial(int hallEffectCharm, int hallEffectStrange, long depth, int 
   Serial.write((depth >>  24) & 0xFF);
   Serial.write(hallEffectCharm);
   Serial.write(voltageMillivolts); // TODO: Ensure software accounts for this
-}
-
-//////////////////////// CORE FUNCTIONALITY ////////////////////////
-
-void setup() {
-  Serial.begin(BAUD_RATE);
-
-  pinMode(HALL_EFFECT_CHARM,   INPUT_PULLUP);
-  pinMode(HALL_EFFECT_STRANGE, INPUT_PULLUP);
-
-  voltageReadout.setBrightness(7);
-  voltageReadout.clear();
-
-  pinMode(STOPPED_LED, OUTPUT);
-  pinMode(ENABLED_LED, OUTPUT);
-
-  depthSensorInit();
-}
-
-void loop() {
-  updateVoltage();
-
-  if (serialInputAvailable()) updateStatusLEDs();
-
-  outputToSerial(
-    digitalRead(HALL_EFFECT_CHARM),
-    digitalRead(HALL_EFFECT_STRANGE),
-    getDepth(),
-    averageVoltage
-  );
-
-  delay(MEASUREMENT_DELAY_MS);
 }
