@@ -1,5 +1,5 @@
 // Status Board for XIAO-ESP32-S3
-// Michigan Robotic Submarine - Fall 2026
+// Ian Spurlock, Michigan Robotic Submarine - Fall 2026
 
 #include <Wire.h>
 #include "MS5837.h"
@@ -8,11 +8,11 @@
 /* Time Constants */
 // Since reading from the sensor takes up to 40ms,
 // make sure this is at least 40.
-constexpr unsigned long MEASUREMENT_DELAY_MS = 50;
-const int BAUD_RATE = 9600;
+constexpr unsigned long CYCLE_DELAY_MS = 50;
 
-/* Fluid Density */
-const int DENSITY_FRESHWATER_KG_M3 = 997;
+/* Serial Constants */
+const int BAUD_RATE = 9600;
+const u_int8_t MESSAGE_HEADER[4] = { 0xFF, 0xFF, 0xFF, 0xFF };
 
 /* Hall Effect Digital Pins */
 const int HALL_EFFECT_CHARM   = 2;
@@ -21,7 +21,9 @@ const int HALL_EFFECT_STRANGE = 3;
 /* Depth Sensor */
 // Documentation: https://github.com/bluerobotics/BlueRobotics_MS5837_Library
 // SDA: GPIO 5, SCL: GPIO 6
+const int DENSITY_FRESHWATER_KG_M3 = 997;
 MS5837 depth_sensor;
+float depth;
 
 /* Status LEDs */
 // IDLE->[][]:'i', ESTOP->[][R]:'e', RUNNING->[G][]:'r', SENSOR_RESET->[G][R]:'s'
@@ -39,7 +41,7 @@ TM1637Display voltageReadout(VOLTAGE_READOUT_CLK, VOLTAGE_READOUT_DIO);
 /* Voltage Divider */
 const int VOLTAGE_DIVIDER_INPUT = 4;
 
-/* Voltage Variables (All in mV) */
+/* Voltage Variables (mV) */
 double averageVoltage = 0.0;
 double voltageSum = 0.0;
 int voltageSampleCount = 0;
@@ -48,6 +50,7 @@ int voltageSampleCount = 0;
 
 void setup() {
   Serial.begin(BAUD_RATE);
+  depthSensorInit();
 
   pinMode(HALL_EFFECT_CHARM,   INPUT_PULLUP);
   pinMode(HALL_EFFECT_STRANGE, INPUT_PULLUP);
@@ -57,55 +60,38 @@ void setup() {
 
   pinMode(STOPPED_LED, OUTPUT);
   pinMode(ENABLED_LED, OUTPUT);
-
-  depthSensorInit();
 }
 
 void loop() {
   updateVoltage();
-
+  updateDepth();
   if (serialInputAvailable()) updateStatusLEDs();
 
-  outputToSerial(
-    digitalRead(HALL_EFFECT_CHARM),
-    digitalRead(HALL_EFFECT_STRANGE),
-    getDepth(),
-    averageVoltage
-  );
-
-  delay(MEASUREMENT_DELAY_MS);
+  outputToSerial();
+  delay(CYCLE_DELAY_MS);
 }
 
 //////////////////////// DEPTH SENSOR ////////////////////////
 
+/* Resets the depth sensor until it successfully initializes */
 void depthSensorInit() {
   Wire.begin();
-  while (!depth_sensor.init()) {
-    Serial.println("Are SDA/SCL connected correctly?");
-    Serial.println("Blue Robotics Bar30: White=SDA, Green=SCL");
-    Serial.println("\n\n\n");
-    delay(5000);
-  }
+  while (!depth_sensor.init()) delay(3000);
   depth_sensor.setModel(MS5837::MS5837_30BA);
   depth_sensor.setFluidDensity(DENSITY_FRESHWATER_KG_M3);
 }
 
-long getDepth() {
+/* Tells the depth sensor to read new value and returns said value */
+void updateDepth() {
   depth_sensor.read();
-  float rawDepth = depth_sensor.depth();
-  long depth;
-
-  //Recasting data to a long because floats can't be bit shifted
-  std::memcpy(&depth, &rawDepth, sizeof(rawDepth));
-
-  return depth;
+  depth = depth_sensor.depth();
 }
 
 //////////////////////// VOLTAGE READOUT ////////////////////////
 
 /* Updates and displays average voltage after enough samples have been collected */
 void updateVoltage() {
-  voltageSum += analogReadMilliVolts(VOLTAGE_DIVIDER_INPUT) * 5.5814; // Will need to be calibrated (theoretical: 5.5454545)
+  voltageSum += analogReadMilliVolts(VOLTAGE_DIVIDER_INPUT) * 5.5814; // To be calibrated (theoretical: 5.5454545)
   voltageSampleCount++;
   if (voltageSampleCount != VOLTAGE_READOUT_SAMPLE_SIZE) return;
 
@@ -117,6 +103,7 @@ void updateVoltage() {
 
 //////////////////////// STATUS LEDS ////////////////////////
 
+/* Reads Serial input and updates LEDs accordingly */
 void updateStatusLEDs() {
   char status = inputFromSerial();
   digitalWrite(STOPPED_LED, status == 's' || status == 'e'); // Stopped if sensor-resetting or e-stopped.
@@ -132,23 +119,15 @@ bool serialInputAvailable() {
 
 /* Receive data from Jetson over USB */
 char inputFromSerial() {
+  while (Serial.available() > 1) Serial.read(); // Ensure serial input data doesn't build up
   return Serial.read(); // TODO: Ensure software accounts for this
 }
 
 /* Send sensor data to Jetson over USB */
-void outputToSerial(int hallEffectCharm, int hallEffectStrange, long depth, int voltageMillivolts) {
-  //Write to serial a message header that the Jetson uses to confirm the start of a message
-  Serial.write(0xFF);
-  Serial.write(0xFF);
-  Serial.write(0xFF);
-  Serial.write(0xFF);
-
-  //Begin writing data to serial one byte at a time
-  Serial.write(hallEffectStrange); // Charm and Strange are at beginning and end to prevent header check on Jetson from looking at depth
-  Serial.write(depth & 0xFF);
-  Serial.write((depth >>  8) & 0xFF);
-  Serial.write((depth >>  16) & 0xFF);
-  Serial.write((depth >>  24) & 0xFF);
-  Serial.write(hallEffectCharm);
-  Serial.write(voltageMillivolts); // TODO: Ensure software accounts for this
+void outputToSerial() {
+  Serial.write(MESSAGE_HEADER, 4);
+  Serial.write(digitalRead(HALL_EFFECT_CHARM));
+  Serial.write(digitalRead(HALL_EFFECT_STRANGE));
+  Serial.write((u_int8_t*)&depth, sizeof(depth)); // "(u_int8_t*)&depth" treats the depth value as an array of bytes
+  Serial.write(static_cast<int>(averageVoltage)); // TODO: Ensure software accounts for this
 }
