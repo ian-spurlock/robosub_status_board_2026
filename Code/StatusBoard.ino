@@ -11,35 +11,36 @@
 constexpr unsigned long CYCLE_DELAY_MS = 50;
 
 /* Serial Constants */
-const int BAUD_RATE = 9600;
-const u_int8_t MESSAGE_HEADER[4] = { 0xFF, 0xFF, 0xFF, 0xFF };
+constexpr int BAUD_RATE = 9600;
+constexpr u_int8_t MESSAGE_HEADER[4] = { 0xFF, 0xFF, 0xFF, 0xFF };
 
 /* Hall Effect Digital Pins */
-const int HALL_EFFECT_CHARM   = 2;
-const int HALL_EFFECT_STRANGE = 3;
+constexpr int HALL_EFFECT_CHARM   = 2;
+constexpr int HALL_EFFECT_STRANGE = 3;
 
 /* Depth Sensor */
 // Documentation: https://github.com/bluerobotics/BlueRobotics_MS5837_Library
 // SDA: GPIO 5, SCL: GPIO 6
-const int DENSITY_FRESHWATER_KG_M3 = 997;
+constexpr int DENSITY_FRESHWATER_KG_M3 = 997;
+const uint8_t DEPTH_SENSOR_MODEL = MS5837::MS5837_30BA; // TODO: Check if this should be _02BA
 MS5837 depth_sensor;
 float depth;
 
 /* Status LEDs */
 // IDLE->[][]:'i', ESTOP->[][R]:'e', RUNNING->[G][]:'r', SENSOR_RESET->[G][R]:'s'
-const int STOPPED_LED = 7;
-const int ENABLED_LED = 44;
+constexpr int STOPPED_LED = 7;
+constexpr int ENABLED_LED = 44;
 
 /* Voltage Readout */
 // Documentation: https://github.com/avishorp/TM1637/tree/master 
 // DIO: GPIO 10, CLK: GPIO 11
-const int VOLTAGE_READOUT_DIO = 10;
-const int VOLTAGE_READOUT_CLK = 11;
-const int VOLTAGE_READOUT_SAMPLE_SIZE = 20;
+constexpr int VOLTAGE_READOUT_DIO = 10;
+constexpr int VOLTAGE_READOUT_CLK = 11;
+constexpr int VOLTAGE_READOUT_SAMPLE_SIZE = 20;
 TM1637Display voltageReadout(VOLTAGE_READOUT_CLK, VOLTAGE_READOUT_DIO);
 
 /* Voltage Divider */
-const int VOLTAGE_DIVIDER_INPUT = 4;
+constexpr int VOLTAGE_DIVIDER_INPUT = 4;
 
 /* Voltage Variables (mV) */
 double averageVoltage = 0.0;
@@ -77,7 +78,7 @@ void loop() {
 void depthSensorInit() {
   Wire.begin();
   while (!depth_sensor.init()) delay(3000);
-  depth_sensor.setModel(MS5837::MS5837_30BA);
+  depth_sensor.setModel(DEPTH_SENSOR_MODEL);
   depth_sensor.setFluidDensity(DENSITY_FRESHWATER_KG_M3);
 }
 
