@@ -12,7 +12,7 @@ constexpr unsigned long CYCLE_DELAY_MS = 50;
 
 /* Serial Constants */
 constexpr int BAUD_RATE = 9600;
-constexpr u_int8_t MESSAGE_HEADER[4] = { 0xFF, 0xFF, 0xFF, 0xFF };
+constexpr uint8_t MESSAGE_HEADER[4] = { 0xFF, 0xFF, 0xFF, 0xFF };
 
 /* Hall Effect Digital Pins */
 constexpr int HALL_EFFECT_CHARM   = 2;
@@ -43,7 +43,7 @@ TM1637Display voltageReadout(VOLTAGE_READOUT_CLK, VOLTAGE_READOUT_DIO);
 constexpr int VOLTAGE_DIVIDER_INPUT = 4;
 
 /* Voltage Variables (mV) */
-double averageVoltage = 0.0;
+int averageVoltage = 0.0;
 double voltageSum = 0.0;
 int voltageSampleCount = 0;
 
@@ -99,7 +99,7 @@ void updateVoltage() {
   averageVoltage = voltageSum / VOLTAGE_READOUT_SAMPLE_SIZE;
   voltageSum = 0;
   voltageSampleCount = 0;
-  voltageReadout.showNumberDecEx(round(averageVoltage * 0.1), 0b01000000, true);
+  voltageReadout.showNumberDecEx(averageVoltage / 10, 0b01000000, true);
 }
 
 //////////////////////// STATUS LEDS ////////////////////////
@@ -120,15 +120,16 @@ bool serialInputAvailable() {
 
 /* Receive data from Jetson over USB */
 char inputFromSerial() {
-  while (Serial.available() > 1) Serial.read(); // Ensure serial input data doesn't build up
-  return Serial.read(); // TODO: Ensure software accounts for this
+  char lastReceived = '\0';
+  while (serialInputAvailable()) lastReceived = Serial.read();
+  return lastReceived; // TODO: Ensure software accounts for this
 }
 
 /* Send sensor data to Jetson over USB */
 void outputToSerial() {
   Serial.write(MESSAGE_HEADER, 4);
-  Serial.write(digitalRead(HALL_EFFECT_CHARM));
-  Serial.write(digitalRead(HALL_EFFECT_STRANGE));
-  Serial.write((u_int8_t*)&depth, sizeof(depth)); // "(u_int8_t*)&depth" treats the depth value as an array of bytes
-  Serial.write(static_cast<int>(averageVoltage)); // TODO: Ensure software accounts for this
+  Serial.write((uint8_t)digitalRead(HALL_EFFECT_CHARM));
+  Serial.write((uint8_t)digitalRead(HALL_EFFECT_STRANGE));
+  Serial.write((uint8_t*)&depth, 4); // "(uint8_t*)&depth" treats the depth value as an array of bytes
+  Serial.write((uint8_t*)&averageVoltage, 2); // TODO: Ensure software accounts for this
 }
