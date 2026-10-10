@@ -22,7 +22,6 @@ constexpr int HALL_EFFECT_STRANGE = 3;
 // Documentation: https://github.com/bluerobotics/BlueRobotics_MS5837_Library
 // SDA: GPIO 5, SCL: GPIO 6
 constexpr int DENSITY_FRESHWATER_KG_M3 = 997;
-const uint8_t DEPTH_SENSOR_MODEL = MS5837::MS5837_30BA; // TODO: Check if this should be _02BA
 MS5837 depth_sensor;
 float depth;
 
@@ -78,7 +77,14 @@ void loop() {
 void depthSensorInit() {
   Wire.begin();
   while (!depth_sensor.init()) delay(3000);
-  depth_sensor.setModel(DEPTH_SENSOR_MODEL);
+
+  /* Automatic model detection in case the built in detection doesn't work:
+  // Automatically set the model:
+  depth_sensor.setModel(MS5837::MS5837_02BA);
+  updateDepth();
+  if (depth >= 2.4) depth_sensor.setModel(MS5837::MS5837_30BA); // The sensor must be placed 0.15m < depth < 2.40m for proper calibration
+  */
+  
   depth_sensor.setFluidDensity(DENSITY_FRESHWATER_KG_M3);
 }
 
