@@ -35,9 +35,9 @@ constexpr int ENABLED_LED = 44;
 
 /* Voltage Readout */
 // Documentation: https://github.com/avishorp/TM1637/tree/master 
-// DIO: GPIO 8, CLK: GPIO 9
-constexpr int VOLTAGE_READOUT_DIO = 8;
-constexpr int VOLTAGE_READOUT_CLK = 9;
+// CLK: GPIO 8, DIO: GPIO 9
+constexpr int VOLTAGE_READOUT_CLK = 8;
+constexpr int VOLTAGE_READOUT_DIO = 9;
 constexpr int VOLTAGE_READOUT_SAMPLE_SIZE = 20;
 TM1637Display voltageReadout(VOLTAGE_READOUT_CLK, VOLTAGE_READOUT_DIO);
 
