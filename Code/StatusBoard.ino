@@ -5,6 +5,8 @@
 #include "MS5837.h"
 #include "TM1637Display.h"
 
+constexpr int USER_LED = 21;
+
 /* Time Constants */
 // Since reading from the sensor takes up to 40ms,
 // make sure this is at least 40.
@@ -15,6 +17,7 @@ constexpr int BAUD_RATE = 9600;
 constexpr uint8_t MESSAGE_HEADER[4] = { 0xFF, 0xFF, 0xFF, 0xFF };
 
 /* Hall Effect Digital Pins */
+// Note: These sensors are interchangeable:
 constexpr int HALL_EFFECT_CHARM   = 2;
 constexpr int HALL_EFFECT_STRANGE = 3;
 
@@ -23,7 +26,7 @@ constexpr int HALL_EFFECT_STRANGE = 3;
 // SDA: GPIO 5, SCL: GPIO 6
 constexpr int DENSITY_FRESHWATER_KG_M3 = 997;
 MS5837 depth_sensor;
-float depth;
+float depth = 0;
 
 /* Status LEDs */
 // IDLE->[][]:'i', ESTOP->[][R]:'e', RUNNING->[G][]:'r', SENSOR_RESET->[G][R]:'s'
@@ -32,9 +35,9 @@ constexpr int ENABLED_LED = 44;
 
 /* Voltage Readout */
 // Documentation: https://github.com/avishorp/TM1637/tree/master 
-// DIO: GPIO 10, CLK: GPIO 11
-constexpr int VOLTAGE_READOUT_DIO = 10;
-constexpr int VOLTAGE_READOUT_CLK = 11;
+// DIO: GPIO 8, CLK: GPIO 9
+constexpr int VOLTAGE_READOUT_DIO = 8;
+constexpr int VOLTAGE_READOUT_CLK = 9;
 constexpr int VOLTAGE_READOUT_SAMPLE_SIZE = 20;
 TM1637Display voltageReadout(VOLTAGE_READOUT_CLK, VOLTAGE_READOUT_DIO);
 
@@ -50,24 +53,31 @@ int voltageSampleCount = 0;
 
 void setup() {
   Serial.begin(BAUD_RATE);
-  depthSensorInit();
+
+  //depthSensorInit(); // Comment for testing
 
   pinMode(HALL_EFFECT_CHARM,   INPUT_PULLUP);
   pinMode(HALL_EFFECT_STRANGE, INPUT_PULLUP);
 
   voltageReadout.setBrightness(7);
   voltageReadout.clear();
+  //voltageReadout.showNumberDecEx(1600, 0b01000000, true); // VOLTAGE READOUT TESTING (TO BE REMOVED)
 
   pinMode(STOPPED_LED, OUTPUT);
   pinMode(ENABLED_LED, OUTPUT);
+
+  pinMode(USER_LED, OUTPUT);
 }
 
 void loop() {
   updateVoltage();
-  updateDepth();
-  if (serialInputAvailable()) updateStatusLEDs();
 
-  outputToSerial();
+  //updateDepth(); // Comment for testing
+  //if (serialInputAvailable()) updateStatusLEDs(); // Comment for testing
+
+  //outputToSerial(); // Comment for testing
+
+  //blinkTestLED(); // TODO: THIS IS FOR TESTING, SHOULD BE COMMENTED
   delay(CYCLE_DELAY_MS);
 }
 
@@ -138,4 +148,13 @@ void outputToSerial() {
   Serial.write((uint8_t)digitalRead(HALL_EFFECT_STRANGE));
   Serial.write((uint8_t*)&depth, 4); // "(uint8_t*)&depth" treats the depth value as an array of bytes
   Serial.write((uint8_t*)&averageVoltage, 2); // TODO: Ensure software accounts for this
+}
+
+//////////////////////// DEBUG ////////////////////////
+
+void blinkTestLED() {
+  digitalWrite(USER_LED, LOW);
+  delay(1000);
+  digitalWrite(USER_LED, HIGH);
+  delay(1000);
 }
