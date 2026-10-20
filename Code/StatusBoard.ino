@@ -5,7 +5,7 @@
 #include "MS5837.h"
 #include "TM1637Display.h"
 
-constexpr int USER_LED = 21;
+constexpr int USER_LED = 21; // For testing
 
 /* Time Constants */
 // Since reading from the sensor takes up to 40ms,
@@ -43,6 +43,7 @@ TM1637Display voltageReadout(VOLTAGE_READOUT_CLK, VOLTAGE_READOUT_DIO);
 
 /* Voltage Divider */
 constexpr int VOLTAGE_DIVIDER_INPUT = 4;
+constexpr double VOLTAGE_READING_CONVERSION_MULTIPLIER = 5.63; // Might want to do more calibration
 
 /* Voltage Variables (mV) */
 int averageVoltage = 0.0;
@@ -54,30 +55,31 @@ int voltageSampleCount = 0;
 void setup() {
   Serial.begin(BAUD_RATE);
 
-  //depthSensorInit(); // Comment for testing
+  //depthSensorInit(); // Commented for testing
 
   pinMode(HALL_EFFECT_CHARM,   INPUT_PULLUP);
   pinMode(HALL_EFFECT_STRANGE, INPUT_PULLUP);
 
   voltageReadout.setBrightness(7);
   voltageReadout.clear();
-  //voltageReadout.showNumberDecEx(1600, 0b01000000, true); // VOLTAGE READOUT TESTING (TO BE REMOVED)
 
   pinMode(STOPPED_LED, OUTPUT);
   pinMode(ENABLED_LED, OUTPUT);
 
   pinMode(USER_LED, OUTPUT);
+  digitalWrite(USER_LED, LOW); // Active-low (enabled for testing)
 }
 
 void loop() {
   updateVoltage();
 
-  //updateDepth(); // Comment for testing
-  //if (serialInputAvailable()) updateStatusLEDs(); // Comment for testing
+  //updateDepth(); // Commented for testing
+  if (serialInputAvailable()) updateStatusLEDs(); // Commented for testing
 
-  //outputToSerial(); // Comment for testing
+  digitalWrite(USER_LED, digitalRead(HALL_EFFECT_CHARM)); // For testing
 
-  //blinkTestLED(); // TODO: THIS IS FOR TESTING, SHOULD BE COMMENTED
+  //outputToSerial(); // Commented for testing
+
   delay(CYCLE_DELAY_MS);
 }
 
@@ -108,7 +110,7 @@ void updateDepth() {
 
 /* Updates and displays average voltage after enough samples have been collected */
 void updateVoltage() {
-  voltageSum += analogReadMilliVolts(VOLTAGE_DIVIDER_INPUT) * 5.5814; // To be calibrated (theoretical: 5.5454545)
+  voltageSum += analogReadMilliVolts(VOLTAGE_DIVIDER_INPUT) * VOLTAGE_READING_CONVERSION_MULTIPLIER;
   voltageSampleCount++;
   if (voltageSampleCount != VOLTAGE_READOUT_SAMPLE_SIZE) return;
 
@@ -148,13 +150,4 @@ void outputToSerial() {
   Serial.write((uint8_t)digitalRead(HALL_EFFECT_STRANGE));
   Serial.write((uint8_t*)&depth, 4); // "(uint8_t*)&depth" treats the depth value as an array of bytes
   Serial.write((uint8_t*)&averageVoltage, 2); // TODO: Ensure software accounts for this
-}
-
-//////////////////////// DEBUG ////////////////////////
-
-void blinkTestLED() {
-  digitalWrite(USER_LED, LOW);
-  delay(1000);
-  digitalWrite(USER_LED, HIGH);
-  delay(1000);
 }
