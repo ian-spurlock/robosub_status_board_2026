@@ -1455,9 +1455,9 @@
 		)
 		(uuid "808d0bc6-b967-4011-acc1-cdc3d48f804d")
 	)
-	(text "Depth Sensor\n"
+	(text "Depth Sensor (1x, 2x conn.)\n"
 		(exclude_from_sim no)
-		(at 51.562 55.118 0)
+		(at 51.054 48.768 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1496,6 +1496,12 @@
 		(uuid "b030edbd-3ee0-4c67-bcbe-344b187e83d4")
 	)
 	(junction
+		(at 49.53 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "00151ce7-d9d8-4b4c-a248-4a5a6ee80bb8")
+	)
+	(junction
 		(at 109.22 110.49)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1508,6 +1514,12 @@
 		(uuid "0a342e28-a662-4677-9d05-c5ac8c5832fd")
 	)
 	(junction
+		(at 52.07 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "26070253-905f-441b-8d56-acb6c018e149")
+	)
+	(junction
 		(at 109.22 105.41)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1518,6 +1530,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "3dd6be7e-a6a6-4db5-870e-9aa2e9a5e5a3")
+	)
+	(junction
+		(at 54.61 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4ffe558b-177a-4887-817c-37e8cb709003")
 	)
 	(junction
 		(at 69.85 67.31)
@@ -1536,6 +1554,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "841868cb-307e-4eee-a94d-f8aff5f9d8d0")
+	)
+	(junction
+		(at 46.99 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "97be34a5-5515-49c2-975a-1e99f9534b94")
 	)
 	(junction
 		(at 92.71 57.15)
@@ -1608,6 +1632,16 @@
 			(type default)
 		)
 		(uuid "0edc261b-390e-47e3-a7f8-2ccae9d7bfaa")
+	)
+	(wire
+		(pts
+			(xy 50.8 63.5) (xy 50.8 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "120debb7-2405-425b-81c2-6840a245cfa6")
 	)
 	(wire
 		(pts
@@ -1781,6 +1815,16 @@
 	)
 	(wire
 		(pts
+			(xy 49.53 64.77) (xy 50.8 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "507320da-1e77-46eb-8cc5-5bbeda4335ff")
+	)
+	(wire
+		(pts
 			(xy 166.37 110.49) (xy 167.64 110.49)
 		)
 		(stroke
@@ -1828,6 +1872,16 @@
 			(type default)
 		)
 		(uuid "62378e12-4af3-4366-b277-2379809fa12e")
+	)
+	(wire
+		(pts
+			(xy 50.8 59.69) (xy 49.53 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6a6a6a4d-da98-4e05-8ed1-9889ea8ecf56")
 	)
 	(wire
 		(pts
@@ -1891,6 +1945,16 @@
 	)
 	(wire
 		(pts
+			(xy 46.99 64.77) (xy 48.26 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7c5a55cf-8de1-4036-9687-2c976ed6391b")
+	)
+	(wire
+		(pts
 			(xy 72.39 64.77) (xy 72.39 71.12)
 		)
 		(stroke
@@ -1908,6 +1972,16 @@
 			(type default)
 		)
 		(uuid "85e775c9-7b1c-4408-955c-1d6286c9b59a")
+	)
+	(wire
+		(pts
+			(xy 54.61 64.77) (xy 55.88 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8db00129-7eef-451d-9fc7-aca24153e273")
 	)
 	(wire
 		(pts
@@ -1971,6 +2045,16 @@
 	)
 	(wire
 		(pts
+			(xy 48.26 63.5) (xy 48.26 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a537ff1a-bdc8-48db-bc05-bb0872cef5cc")
+	)
+	(wire
+		(pts
 			(xy 52.07 68.58) (xy 59.69 68.58)
 		)
 		(stroke
@@ -2001,6 +2085,16 @@
 	)
 	(wire
 		(pts
+			(xy 53.34 59.69) (xy 52.07 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4cf84db-4055-4484-8c1b-e51e251dd5d6")
+	)
+	(wire
+		(pts
 			(xy 133.35 88.9) (xy 133.35 107.95)
 		)
 		(stroke
@@ -2008,6 +2102,16 @@
 			(type default)
 		)
 		(uuid "b76fde0f-4598-4e6c-b80c-cb20194c33e4")
+	)
+	(wire
+		(pts
+			(xy 48.26 59.69) (xy 46.99 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bb55c98c-e249-4ab0-becd-da68fdc5994a")
 	)
 	(wire
 		(pts
@@ -2038,6 +2142,16 @@
 			(type default)
 		)
 		(uuid "cf549c96-45fa-4418-ad95-fab612a590a8")
+	)
+	(wire
+		(pts
+			(xy 53.34 59.69) (xy 53.34 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d1283b46-55e4-4679-93a5-112a932f5519")
 	)
 	(wire
 		(pts
@@ -2131,6 +2245,16 @@
 	)
 	(wire
 		(pts
+			(xy 55.88 59.69) (xy 54.61 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e5e3a6e8-e1a5-4ea8-b439-ff0f505373f1")
+	)
+	(wire
+		(pts
 			(xy 92.71 57.15) (xy 105.41 57.15)
 		)
 		(stroke
@@ -2151,6 +2275,16 @@
 	)
 	(wire
 		(pts
+			(xy 52.07 64.77) (xy 53.34 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f87628b0-5bac-48e1-915a-9755f5653281")
+	)
+	(wire
+		(pts
 			(xy 128.27 57.15) (xy 128.27 68.58)
 		)
 		(stroke
@@ -2158,6 +2292,16 @@
 			(type default)
 		)
 		(uuid "f9753c70-cf02-4c2b-9f28-7e540e08a1bc")
+	)
+	(wire
+		(pts
+			(xy 55.88 63.5) (xy 55.88 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fb23b1dd-7c11-44f5-b6ed-71b36b5e0b25")
 	)
 	(wire
 		(pts
@@ -4209,6 +4353,91 @@
 			(project "status_board"
 				(path "/4c986fa9-a957-4ae2-82f6-4f95104bacdd"
 					(reference "J8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x04")
+		(at 49.53 53.34 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "bee6404d-fc3a-4d4a-b347-81c36d5302b0")
+		(property "Reference" "J9"
+			(at 46.228 51.054 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Conn_01x04"
+			(at 53.594 51.054 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 49.53 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 49.53 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 49.53 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "97abe9a1-28be-48d0-ab9e-afcb2e9994bc")
+		)
+		(pin "2"
+			(uuid "c6645b0b-39da-4ac4-85d1-80f9f5c9419d")
+		)
+		(pin "3"
+			(uuid "ef567f93-5f86-4ea4-a585-51ead1ff2f9d")
+		)
+		(pin "4"
+			(uuid "c670ce8d-3de0-4a43-824f-4625f4b20b4e")
+		)
+		(instances
+			(project "status_board"
+				(path "/4c986fa9-a957-4ae2-82f6-4f95104bacdd"
+					(reference "J9")
 					(unit 1)
 				)
 			)
