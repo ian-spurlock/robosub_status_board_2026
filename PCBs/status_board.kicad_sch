@@ -2488,10 +2488,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "0f1ba538-6512-4939-ba90-a06ebe247b60")
 		(property "Reference" "R5"
-			(at 171.45 104.14 90)
+			(at 169.164 108.204 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2500,8 +2499,8 @@
 				)
 			)
 		)
-		(property "Value" "R"
-			(at 171.45 106.68 90)
+		(property "Value" "330"
+			(at 172.72 108.204 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2510,7 +2509,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
 			(at 171.45 112.268 90)
 			(hide yes)
 			(show_name no)
@@ -2592,7 +2591,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm"
 			(at 69.85 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -2652,7 +2651,7 @@
 		(dnp no)
 		(uuid "21e2870e-a678-437e-a074-31f4675bac8b")
 		(property "Reference" "R4"
-			(at 113.03 113.792 90)
+			(at 110.49 114.046 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2661,8 +2660,8 @@
 				)
 			)
 		)
-		(property "Value" "R"
-			(at 113.03 116.332 90)
+		(property "Value" "4.7k"
+			(at 115.062 114.046 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2671,7 +2670,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
 			(at 113.03 113.538 90)
 			(hide yes)
 			(show_name no)
@@ -2807,10 +2806,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "2d77e71a-96de-4eef-b512-03e4d3967df4")
 		(property "Reference" "R3"
-			(at 113.03 100.33 90)
+			(at 110.236 104.14 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2819,8 +2817,8 @@
 				)
 			)
 		)
-		(property "Value" "R"
-			(at 113.03 102.87 90)
+		(property "Value" "4.7k"
+			(at 115.062 104.14 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2829,7 +2827,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
 			(at 113.03 108.458 90)
 			(hide yes)
 			(show_name no)
@@ -2910,7 +2908,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical"
 			(at 135.89 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -3007,7 +3005,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Seeed_Studio_XIAO_Series:XIAO-ESP32-S3-SMD"
+		(property "Footprint" ""
 			(at 86.36 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -3092,7 +3090,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "MountingHole:MountingHole_2.5mm_Pad"
 			(at 57.15 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -3144,10 +3142,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "4c60a5fe-e8b8-4588-8ca2-69486230b0a5")
 		(property "Reference" "R6"
-			(at 171.45 107.95 90)
+			(at 169.164 116.84 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3156,8 +3153,8 @@
 				)
 			)
 		)
-		(property "Value" "R"
-			(at 171.45 110.49 90)
+		(property "Value" "330"
+			(at 172.974 116.586 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3166,7 +3163,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
 			(at 171.45 116.078 90)
 			(hide yes)
 			(show_name no)
@@ -3301,10 +3298,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "5f3fbdf9-ed00-44c7-9d8e-212e875f43d2")
 		(property "Reference" "R2"
-			(at 72.39 73.6599 0)
+			(at 65.532 73.914 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3314,8 +3310,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "R"
-			(at 72.39 76.1999 0)
+		(property "Value" "2.2k"
+			(at 64.262 76.2 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3325,7 +3321,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
 			(at 68.072 74.93 90)
 			(hide yes)
 			(show_name no)
@@ -3486,7 +3482,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "MountingHole:MountingHole_2.5mm_Pad"
 			(at 57.15 109.22 0)
 			(hide yes)
 			(show_name no)
@@ -3538,10 +3534,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "93022776-aabd-4f8d-a8b6-b23c5a80c9c9")
 		(property "Reference" "D1"
-			(at 181.9275 102.87 0)
+			(at 178.054 112.268 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3551,7 +3546,7 @@
 			)
 		)
 		(property "Value" "LED"
-			(at 181.9275 105.41 0)
+			(at 180.848 112.268 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3560,7 +3555,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LED_THT:LED_D3.0mm"
 			(at 180.34 110.49 0)
 			(hide yes)
 			(show_name no)
@@ -3653,7 +3648,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "MountingHole:MountingHole_2.5mm_Pad"
 			(at 57.15 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -3718,7 +3713,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "R"
+		(property "Value" "10k"
 			(at 74.93 76.1999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3729,7 +3724,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
 			(at 70.612 74.93 90)
 			(hide yes)
 			(show_name no)
@@ -3808,7 +3803,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_GH_BM04B-GHS-TBT_1x04-1MP_P1.25mm_Vertical"
 			(at 49.53 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -3893,7 +3888,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
 			(at 189.23 100.33 0)
 			(hide yes)
 			(show_name no)
@@ -4223,7 +4218,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Seeed_Studio_XIAO_Series:XIAO-ESP32-S3-SMD"
+		(property "Footprint" ""
 			(at 99.06 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -4305,7 +4300,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical"
 			(at 154.94 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -4399,7 +4394,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_SH_BM04B-SRSS-TB_1x04-1MP_P1.00mm_Vertical"
 			(at 49.53 53.34 0)
 			(hide yes)
 			(show_name no)
@@ -4463,10 +4458,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "d62e35f4-5561-4486-90a5-f9c47e28e803")
 		(property "Reference" "D2"
-			(at 181.9275 106.68 0)
+			(at 178.562 107.95 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4476,7 +4470,7 @@
 			)
 		)
 		(property "Value" "LED"
-			(at 181.9275 109.22 0)
+			(at 181.61 107.95 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4485,7 +4479,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LED_THT:LED_D3.0mm"
 			(at 180.34 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -4736,7 +4730,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "MountingHole:MountingHole_2.5mm_Pad"
 			(at 57.15 104.14 0)
 			(hide yes)
 			(show_name no)
